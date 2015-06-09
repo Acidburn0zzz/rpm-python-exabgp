@@ -50,6 +50,13 @@ mv ${RPM_BUILD_ROOT}/usr/etc/exabgp ${RPM_BUILD_ROOT}/%{_sysconfdir}/
 install -d %{buildroot}/%{_unitdir}
 install etc/systemd/exabgp.service %{buildroot}/%{_unitdir}/
 
+install -d %{buildroot}/%{_mandir}/man1
+install doc/man/exabgp.1 %{buildroot}/%{_mandir}/man1
+
+install -d %{buildroot}/%{_mandir}/man5
+install doc/man/exabgp.conf.5 %{buildroot}/%{_mandir}/man5
+
+
 %post -n exabgp
 %systemd_post exabgp.service
 
@@ -62,6 +69,7 @@ install etc/systemd/exabgp.service %{buildroot}/%{_unitdir}/
 %files
 %defattr(-,root,root,-)
 %{python2_sitelib}/*
+%doc COPYRIGHT CHANGELOG README.md
 
 %files -n exabgp
 %defattr(-,root,root,-)
@@ -70,6 +78,9 @@ install etc/systemd/exabgp.service %{buildroot}/%{_unitdir}/
 %dir %{_sysconfdir}/exabgp
 %attr(744, root, root) %{_sysconfdir}/exabgp/*
 %{_unitdir}/exabgp.service
+%doc COPYRIGHT CHANGELOG README.md
+%{_mandir}/man1/*
+%{_mandir}/man5/*
 
 %changelog
 * Tue Jun 09 2015 Arun Babu Neelicattu <arun.neelicattu@gmail.com> - 3.4.11-1
