@@ -2,7 +2,7 @@
 %{!?python2_sitelib:  %global python2_sitelib %(%{__python2} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")}
 
 Name:           python-exabgp
-Version:        3.4.11
+Version:        3.4.17
 Release:        1%{?dist}
 Summary:        The BGP swiss army knife of networking (Library)
 
@@ -26,11 +26,10 @@ BuildRequires:  systemd-units
 Requires:       systemd, exabgp-libs == %{version}
 
 %description -n exabgp
-ExaBGP allows engineers to control their network from commodity servers. Think of it as Software Defined Networking using BGP by transforming BGP messages into friendly plain text or JSON.
-
-It comes with an healthcheck application to help you monitor your daemons and withdraw dead ones from the network during failures/maintenances. A full lab explaining how to use it is available here.
-
-Find what other users have done with it. Current documented use cases include DDOS mitigation, network visualisation, anycast, service high availability.
+ExaBGP allows engineers to control their network from commodity servers. Think
+of it as Software Defined Networking using BGP by transforming BGP messages
+into friendly plain text or JSON. Current documented use cases include DDOS
+mitigation, network visualisation, anycast, service high availability.
 
 %prep
 %setup -q -n exabgp-%{version}
@@ -43,7 +42,6 @@ Find what other users have done with it. Current documented use cases include DD
 
 # fix file locations
 mv ${RPM_BUILD_ROOT}%{_bindir} ${RPM_BUILD_ROOT}%{_sbindir}
-mv ${RPM_BUILD_ROOT}%{_sbindir}/healthcheck ${RPM_BUILD_ROOT}/%{_sbindir}/exabgp-healthcheck
 install -d -m 744 ${RPM_BUILD_ROOT}/%{_sysconfdir}/
 mv ${RPM_BUILD_ROOT}/usr/etc/exabgp ${RPM_BUILD_ROOT}/%{_sysconfdir}/
 
@@ -74,7 +72,6 @@ install doc/man/exabgp.conf.5 %{buildroot}/%{_mandir}/man5
 %files -n exabgp
 %defattr(-,root,root,-)
 %attr(755, root, root) %{_sbindir}/exabgp
-%attr(755, root, root) %{_sbindir}/exabgp-healthcheck
 %dir %{_sysconfdir}/exabgp
 %attr(744, root, root) %{_sysconfdir}/exabgp/*
 %{_unitdir}/exabgp.service
@@ -83,6 +80,7 @@ install doc/man/exabgp.conf.5 %{buildroot}/%{_mandir}/man5
 %{_mandir}/man5/*
 
 %changelog
+* Mon Oct 17 2016 John Siegrist <john@complects.com> - 3.4.17-1
+- Update to version 3.4.17
 * Tue Jun 09 2015 Arun Babu Neelicattu <arun.neelicattu@gmail.com> - 3.4.11-1
 - Initial release
-
